@@ -1,40 +1,19 @@
 
+function y = minha_conv(s1, s2)
+    
+    len_s1 = length(s1); % calcula o tamanho dos sinais de entrada
+    len_s2 = length(s2);
+    len_res = len_s1 + len_s2 - 1;
+    
+    res = [zeros(1, len_res)]; % inicialização do vetor da resposta
 
-clear all;
-close all;
-clc;
-
-s1 = [zeros(1,10) ones(1,5) zeros(1,5)];
-
-s2 = [ones(1,3) zeros(1,17)];
-
-res = [zeros(1, 20)];
-
-figure();
-
-stem(s1);
-
-figure();
-
-stem(s2);
-
-aux = 0;
-
-for i = 1:20
-   for j = i:-1:1
-        k = i + 1 - j;
-        aux = s1(k) * s2(j);
-        res(i) = res(i) + aux;
-   end
+    for i = 1:len_res
+        for j = 1:len_s1 
+           if ((i-j+1) >= 1) && ((i-j+1) <= len_s2) % o if é necessário pra limitar quando o vetor pode ser acessado
+               aux = s1(j) * s2(i-j+1); % x(tal)*h(t-tal)
+               res(i) = res(i) + aux; % vai somando (integrando) cada operação que é feita
+           end
+        end
+    end
+    y = res; %retorno da função
 end
-
-figure();
-
-stem(res);
-
-res1 = conv(s1,s2);
-
-figure();
-
-stem(res1);
-
