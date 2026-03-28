@@ -1,0 +1,36 @@
+
+function y = minha_conv(s1, s2)
+    s1 = [zeros(1,10) ones(1,5) zeros(1,5)];
+    
+    s2 = [ones(1,3) zeros(1,17)];
+    
+    figure();
+    
+    stem(s1);
+    
+    figure();
+    
+    stem(s2);
+    
+    len_s1 = length(s1);
+    len_s2 = length(s2);
+    len_res = len_s1 + len_s2 - 1;
+    
+    res = [zeros(1, len_res)];
+    
+    aux = 0;
+    for i = 1:len_res
+        for j = 1:len_s1 
+           if ((i-j+1) >= 1) && ((i-j+1) <= len_s2)
+               aux = s1(j) * s2(i-j+1);
+               res(i) = res(i) + aux;
+           end
+        end
+        aux = 0;
+    end
+    
+    figure();
+    
+    stem(res);
+    y = res;
+end
